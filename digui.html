@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for循环递归方法</title>
+</head>
+<body>
+<p>
+    本demo为另一种循环方式，可实现无限极导航循环
+    <br>
+    抱歉没有加入样式和组件功能，只是单纯的写出了方法和思路
+    <br>
+    <a href="index.html">返回</a>
+</p>
+
+<div></div>
+
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $(function () {
+
+        $.ajax({
+            type: "post",
+            url: "./json/test.json",
+            success: function (data) {
+                var menu = $('<ul class="nav-list">');
+                (function createMenu(menu, data){
+                    for(var index in data){
+                        var li = $('<li class="list'+data[index].id+'">'+data[index].name+'</li>');
+                        menu.append(li);
+                        if(data[index].cc){
+                            createMenu(li ,data[index].cc)
+                        }
+                    }
+                })(menu, data);
+
+                $("div").append(menu)
+            }
+        });
+    });
+</script>
+</body>
+</html>
